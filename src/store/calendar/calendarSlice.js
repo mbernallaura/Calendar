@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { addHours } from 'date-fns';
 
 const tempEvent = {
+    _id: new Date().getTime(),
     title: 'Cumpleaños del jefe',
     notes: 'Comprar pastel',
     start: new Date(), //Obligatorio
@@ -22,12 +23,12 @@ export const calendarSlice = createSlice({
         activeEvent: null
     },
     reducers: {
-        increment: (state, /* action */ ) => {
-            state.counter += 1;
-        },
+        onSetActiveEvent:(state, { payload }) =>{
+            state.activeEvent = payload;
+        }
     }
 });
 
 
 // Action creators are generated for each case reducer function
-export const { increment } = calendarSlice.actions;
+export const { onSetActiveEvent } = calendarSlice.actions;

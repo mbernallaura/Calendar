@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { addHours, differenceInSeconds } from "date-fns";
 
 import Swal from "sweetalert2";
@@ -9,7 +9,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { es } from 'date-fns/locale/es';
-import { useUiStore } from "../../hooks";
+import { useCalendarStore, useUiStore } from "../../hooks";
 
 registerLocale('es', es); //Para poder cambiar tanto el cuadro del mes y la hora en español
 
@@ -28,10 +28,11 @@ Modal.setAppElement('#root'); //Id del index.hmtl
 
 export const CalendarModal = () => {
     const { isDateModalOpen, closeDateModal } =useUiStore();
+    const { activeEvent } =useCalendarStore();
     const [formSubmited, setFormSubmited] = useState(false);
     const [formValues, setFormValues] = useState({
-        title: 'Laura',
-        notes: 'Bernal',
+        title: '',
+        notes: '',
         start: new Date(),
         end: addHours (new Date(), 2),
     });
@@ -43,6 +44,13 @@ export const CalendarModal = () => {
             : 'is-invalid';
 
     }, [formValues.title, formSubmited])
+
+    useEffect(() => {
+        if(activeEvent !== null){
+            setFormValues({...activeEvent})
+        }
+    }, [activeEvent])
+    
 
     const onInputChange = ({ target }) =>{
         //Recibir target name: notes, title 
