@@ -6,23 +6,13 @@ import { addHours } from 'date-fns';
 import { CalendarEvent, CalendarModal, Navbar } from "..";
 
 import { localizer, getMessagesEs } from '../../helpers';
-import { useUiStore } from '../../hooks';
+import { useUiStore, useCalendarStore } from '../../hooks';
 
-
-const events = [{
-    title: 'Cumpleaños del jefe',
-    notes: 'Comprar pastel',
-    start: new Date(), //Obligatorio
-    end: addHours(new Date(), 2), //Obligatorio
-    bgColor: '#fafafa',
-    user:{
-        _id:'123',
-        name: 'Laura Bernal'
-    }
-}]
 
 export const CalendarPage = () => {
     const { openDateModal } = useUiStore();
+    const { events } = useCalendarStore();
+    
     const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'week');
     const eventStyleGetter = ( event, start, end, isSelected ) =>{
 
