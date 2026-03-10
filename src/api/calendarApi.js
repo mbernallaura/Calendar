@@ -15,7 +15,8 @@ calendarApi.interceptors.request.use( config =>{
     config.headers = {
         ...config.headers,
         //Mandar el token, se encuentra en inspeccionar/Network/Headers/Request Headers
-        //Para que el backend sepa que estamos validados a traves del token 
+        //!Para que el backend sepa que estamos validados a traves del token
+        //!Todas las peticiones van autenticadas 
         'x-token': localStorage.getItem('token')
     }
 
